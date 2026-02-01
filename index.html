@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>IBGE QUEST</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 20px;
+}
+h1 { text-align: center; }
+.card {
+  background: #020617;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+}
+button.done { background: #16a34a; }
+</style>
+</head>
+
+<body>
+
+<h1>🎮 IBGE QUEST</h1>
+<p id="progress" style="text-align:center;"></p>
+
+<div class="card">
+<h2>📘 Português</h2>
+<button onclick="complete('p1')">Interpretação</button>
+<button onclick="complete('p2')">Ortografia</button>
+<button onclick="complete('p3')">Pontuação</button>
+</div>
+
+<div class="card">
+<h2>📐 Matemática</h2>
+<button onclick="complete('m1')">Porcentagem</button>
+<button onclick="complete('m2')">Regra de três</button>
+</div>
+
+<div class="card">
+<h2>🏛️ IBGE</h2>
+<button onclick="complete('i1')">Funções do IBGE</button>
+<button onclick="complete('i2')">Trabalho de campo</button>
+</div>
+
+<button onclick="speak()">🔊 Ouvir explicação</button>
+
+<script>
+let completed = JSON.parse(localStorage.getItem("completed")) || [];
+
+function complete(id) {
+  if (!completed.includes(id)) completed.push(id);
+  localStorage.setItem("completed", JSON.stringify(completed));
+  update();
+}
+
+function update() {
+  document.getElementById("progress").innerText =
+    "Fases concluídas: " + completed.length;
+}
+
+function speak() {
+  speechSynthesis.speak(
+    new SpeechSynthesisUtterance(
+      "Bem vindo ao IBGE Quest. Complete fases para avançar no edital."
+    )
+  );
+}
+
+update();
+</script>
+
+</body>
+</html>
